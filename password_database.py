@@ -3,7 +3,7 @@ import sqlite3
 import os, sys
 from tqdm import tqdm
 from tabulate import tabulate
-# from password_generator import password
+from password_generator import password
 # from encode_password import encrypt_me
 from drive_api import *
 
@@ -49,8 +49,7 @@ class PasswordManager:
 			print(f"Choose Right Option")
 			self.choose_option()
 
-	@staticmethod
-	def protection_for_database():
+	def protection_for_database(self):
 		directory = os.path.join(os.getcwd(), "password")
 		if not os.path.exists(directory):
 			directory_file = os.mkdir(os.path.join(os.getcwd(), "password"))
@@ -155,6 +154,9 @@ class PasswordManager:
 		print(tabulate(data, headers, tablefmt="github"))
 
 	def master_password(self):
+		pass
+
+	def fetch_all_data(self):
 		directory_loacation = self.protection_for_database()
 		password_db = input("Enter Your Database Password: ")
 		with open(os.path.join(directory_loacation + "/password.txt"), "r") as file:
@@ -164,11 +166,7 @@ class PasswordManager:
 			else:
 				print("\n")
 				print("Password Not Matched")
-				self.choose_option()
-
-	def fetch_all_data(self):
 		# database fetch using password..
-		self.master_password()
 		data = []
 		headers = ["id", "Domain", "Email", "Password"]
 		for row in cur.execute('SELECT * FROM password'):
